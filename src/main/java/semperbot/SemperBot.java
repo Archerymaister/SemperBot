@@ -3,6 +3,8 @@ package semperbot;
 import semperbot.annotations.BaseCommand;
 import semperbot.command.CommandManager;
 import semperbot.command.commands.*;
+import semperbot.command.commands.list.listAllCategoriesCommand;
+import semperbot.command.commands.list.listScaledCategoriesCommand;
 import semperbot.command.commands.scaling.addScalingCommand;
 import semperbot.listeners.Listeners;
 
@@ -25,11 +27,11 @@ import java.util.Properties;
 import static net.dv8tion.jda.api.interactions.commands.OptionType.STRING;
 
 @BaseCommand(value = "/semper", commands = {
-      helpCommand.class,
+        testCommand.class,
         listAllCategoriesCommand.class,
         listScaledCategoriesCommand.class,
-        sayCommand.class,
-        addScalingCommand.class
+        addScalingCommand.class,
+        helpCommand.class
 })
 public class SemperBot {
     private static Properties properties = new Properties();

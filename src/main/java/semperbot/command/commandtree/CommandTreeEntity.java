@@ -18,13 +18,22 @@ public class CommandTreeEntity {
         this.clazz = clazz;
     }
 
+    public CommandTreeEntity(String name) {
+        this.name = name;
+    }
+
+    public CommandTreeEntity(String name, Class<? extends ICommand> clazz) {
+        this.name = name;
+        this.clazz = clazz;
+    }
+
     public CommandTreeEntity getChild(String name){
         return this.nodes.get(name);
     }
 
     public CommandTreeEntity addLeaf(String path, Class<? extends ICommand> clazz){
         if(!path.contains(".")){
-            this.nodes.put(path, new CommandTreeEntity(clazz));
+            this.nodes.put(path, new CommandTreeEntity(path, clazz));
             return this.nodes.get(path);
         }
 
@@ -36,7 +45,7 @@ public class CommandTreeEntity {
         if(child != null){
             child.addLeaf(newPath, clazz);
         }else{
-            this.nodes.put(pathMatcher.group(1), new CommandTreeEntity());
+            this.nodes.put(pathMatcher.group(1), new CommandTreeEntity(pathMatcher.group(1)));
             child = this.nodes.get(pathMatcher.group(1));
             child.addLeaf(newPath, clazz);
         }
@@ -79,5 +88,18 @@ public class CommandTreeEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public HashMap<String, CommandTreeEntity> getNodes() {
+        return nodes;
+    }
+
+    @Override
+    public String toString() {
+        return "CommandTreeEntity{" +
+                "nodes=" + nodes.keySet() +
+                ", name='" + name + '\'' +
+                ", clazz=" + clazz +
+                '}';
     }
 }

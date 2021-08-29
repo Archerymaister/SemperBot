@@ -10,10 +10,11 @@ public class CommandTree {
     private static HashMap<String, CommandTreeEntity> commands = new HashMap<>();
 
     public CommandTree(String baseCommand, String path, Class<? extends ICommand> clazz){
-        if(commands.containsKey(baseCommand))
-            commands.get(baseCommand).addLeaf(path,clazz);
-        else
-            commands.put(baseCommand, new CommandTreeEntity().addLeaf(path, clazz));
+        if(!commands.containsKey(baseCommand))
+            commands.put(baseCommand, new CommandTreeEntity(baseCommand));
+        commands.get(baseCommand).addLeaf(path,clazz);
+
+        System.out.println(path);
     }
 
     public CommandTree(String path, Class<? extends ICommand> clazz){

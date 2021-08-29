@@ -40,11 +40,15 @@ public class CommandManager {
         if(!CommandTree.isCommand(event.getMessage().getContentRaw())) {
             return;
         }
+
         String[] command = event.getMessage().getContentRaw().split(" ");
         CommandTreeEntity curEnt = CommandTree.getCommandTree(command[0]);
 
+
+
         for(String s : command){
-            System.out.println(s);
+            System.out.println(curEnt.getName() + " is leaf: " + curEnt.isLeaf());
+            System.out.println(curEnt.toString());
             if(s.startsWith("/"))
                 continue;
 
@@ -56,6 +60,8 @@ public class CommandManager {
 
         try {
             curEnt.getClazz().getConstructor().newInstance().getClass().getDeclaredMethod("onCall", MessageReceivedEvent.class, String[].class).invoke(curEnt.getClazz().getConstructor().newInstance(),event, new String[]{});
+        }catch(NullPointerException npe){
+            new helpCommand().onCall(event);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
